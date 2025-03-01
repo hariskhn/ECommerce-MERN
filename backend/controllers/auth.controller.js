@@ -133,13 +133,18 @@ const refreshToken = async (req, res) => {
     }
 }
 
-// const getProfile = async (req, res) => {
-
-// }
+const getProfile = async (req, res) => {
+    try {
+        return res.status(200).json({ user: req.user });
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+}
 
 export {
     signup,
     login,
     logout,
-    refreshToken
+    refreshToken,
+    getProfile
 }
