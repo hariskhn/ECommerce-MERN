@@ -1,6 +1,5 @@
 import Coupon from "../models/coupon.model.js";
 import { stripe } from "../lib/stripe.js";
-import Coupon from "../models/coupon.model.js";
 import Order from "../models/order.model.js"
 
 const createStripeCoupon = async (discountPercentage) => {
