@@ -16,7 +16,12 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: [true, "Password is required"],
-        min: [6, "Password must be at least 6 characters long"],
+        validate: {
+            validator: function (value) {
+                return value.length >= 6
+            },
+            message: "Password must be at least 6 characters long",
+        },
     },
     cartItems: [
         {
