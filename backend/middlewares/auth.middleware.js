@@ -11,16 +11,16 @@ export const protectRoute = async (req, res, next) => {
 
         try {
             const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-            const user = await User.findById(decoded.id).select("-password");
-    
-            if(!user) {
+            const user = await User.findById(decoded.userId).select("-password");
+
+            if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }
-    
+
             req.user = user;
             next();
         } catch (error) {
-            if(error.message === "TokenExpiredError") {
+            if (error.name === "TokenExpiredError") {
                 return res.status(401).json({ message: "Unauthorized - Token expired" });
             }
             throw error;
@@ -31,9 +31,9 @@ export const protectRoute = async (req, res, next) => {
 }
 
 export const adminRoute = async (req, res, next) => {
-    if(req.user && req.user.role === "admin") {
+    if (req.user && req.user.role === "admin") {
         next();
-    }else {
+    } else {
         return res.status(403).json({ message: "Access denied - Admin only" });
     }
 }
