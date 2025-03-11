@@ -45,7 +45,8 @@ const createCheckoutSession = async (req, res) => {
                         images: [product.image],
                     },
                     unit_amount: amount
-                }
+                },
+                quantity: product.quantity || 1,
             }
 
         });
@@ -97,9 +98,9 @@ const createCheckoutSession = async (req, res) => {
 const checkoutSuccess = async(req, res) => {
     try {
         const {sessionId} = req.body;
-        const session = await Stripe.checkout.sessions.retrieve(sessionId);
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-        if(sessionId.payment_status === "paid") {
+        if(session.payment_status === "paid") {
             if(session.metadata.couponCode){
                 await Coupon.findOneAndUpdate(
                     { code: session.metadata.couponCode, userId: session.metadata.userId },
