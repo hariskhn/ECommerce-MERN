@@ -15,12 +15,12 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "frontend/dist"
+      "src": "/api/v1/(.*)",
+      "dest": "backend/server.js"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "backend/server.js"
+      "src": "/(.*)",
+      "dest": "frontend/dist"
     }
   ]
 }
